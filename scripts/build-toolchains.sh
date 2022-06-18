@@ -19,7 +19,7 @@ DIR="$(dirname "$($READLINK -f "${BASH_SOURCE[0]:-${(%):-%x}}")")"
 CHIPYARD_DIR="$(dirname "$DIR")"
 
 # Allow user to override MAKE
-[ -n "${MAKE:+x}" ] || MAKE=$(command -v gnumake || command -v gmake || command -v make)
+[ -n "${MAKE:+x}" ] || MAKE=$(command -v make)
 readonly MAKE
 
 usage() {
@@ -154,7 +154,7 @@ else
     module_make riscv-gnu-toolchain linux
 fi
 
-module_all riscv-isa-sim --prefix="${RISCV}"
+module_all riscv-isa-sim --prefix="${RISCV}" --with-boost=no --with-boost-asio=no --with-boost-regex=no
 # build static libfesvr library for linking into firesim driver (or others)
 echo '==>  Installing libfesvr static library'
 module_make riscv-isa-sim libfesvr.a
